@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const validate = require("validator")
 const jwt = require("jsonwebtoken");
-const  bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt")
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -70,7 +70,7 @@ userSchema.methods.getJWT = async function () {
     return token
 }
 
-userSchema.methods.validatePassword =async function (password){
+userSchema.methods.validatePassword = async function (password) {
     const user = this;
 
     const validPassword = await bcrypt.compare(password, user.password);
