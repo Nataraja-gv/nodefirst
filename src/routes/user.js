@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 const userRouter = express.Router();
 
-const USER_SAFE_DATA = ["firstName", "lastName", "age", "phoneNumber", "skills"]
+const USER_SAFE_DATA = ["firstName", "lastName", "phoneNumber", "skills","PhotoUrl","gendor",'age',"skills"]
 
 userRouter.get("/user/requests/received", userAuth, async (req, res) => {
     try {
@@ -14,7 +14,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
         const connectionRequest = await ConnectionRequestModel.find({
             toUserId: loggedInUser._id,
             status: "interested"
-        }).populate("fromUserId", "firstName lastName")
+        }).populate("fromUserId", USER_SAFE_DATA)
 
         res.json({
             message: "Data fetch Successfully",
@@ -59,7 +59,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
     try {
         const loggedInUser = req.user;
         const page = parseInt(req.query.page || 1);
-        let limit = parseInt(req.query.limit || 10)
+        let limit = parseInt(req.query.limit || 2)
         limit=limit>50?50:limit;
          
         const skip = (page-1)*limit
